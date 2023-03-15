@@ -1,0 +1,27 @@
+{
+  "name": "edatafront",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "core-js": "^3.25.3",
+    "dayjs": "^1.10.7",
+    "lodash": "^4.17.21",
+    "nuxt": "^2.15.8",
+    "vee-validate": "3",
+    "vue": "^2.7.10",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10",
+    "webpack": "^4.46.0"
+  },
+  "devDependencies": {
+    "sass": "^1.59.2",
+    "sass-loader": "10"
+  }
+}
