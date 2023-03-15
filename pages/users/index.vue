@@ -196,7 +196,7 @@ export default {
   computed: {
     //filtro
     usersGruped() {
-      console.log("this.usersList", this.usersList)
+
       return this.usersList;
     },
   },

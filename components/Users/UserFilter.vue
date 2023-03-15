@@ -8,20 +8,20 @@
 
     <div class="form-field-selectrole">
       <FormLabel>Grupo de acesso</FormLabel>
-      <FormInputSelect :options="roleOptions" placeholderSelect="Selecione um grupo" v-model="filter.roleId">
+      <FormInputSelect :options="roleOptions" placeholderSelect="Selecione um grupo" v-model="filter.roleId" :isNOTFilterField="false" :showCustomError="false">
       </FormInputSelect>
     </div>
 
     <div class="form-field-selectRegion">
       <FormLabel>Região</FormLabel>
-      <FormInputSelect :options="regionOptions" placeholderSelect="Selecione uma região" v-model="filter.regionId">
+      <FormInputSelect :options="regionOptions" placeholderSelect="Selecione uma região" v-model="filter.regionId"  :isNOTFilterField="false" :showCustomError="false">
       </FormInputSelect>
     </div>
 
 
     <div class="form-field-selectStatus">
       <FormLabel>Status</FormLabel>
-      <FormInputSelect :options="statusOptions" placeholderSelect="Selecione um status" alt="status"
+      <FormInputSelect :options="statusOptions" placeholderSelect="Selecione um status" alt="status"  :isNOTFilterField="false" :showCustomError="false"
         v-model="filter.status">
       </FormInputSelect>
     </div>

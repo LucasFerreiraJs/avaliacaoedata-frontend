@@ -11,6 +11,7 @@
       </option>
 
     </select>
+    <span v-show="isNOTFilterField && showCustomError && checkError" class="custom-error">Campo obrigatório</span>
   </ValidationProvider>
 </template>
 <script>
@@ -54,25 +55,41 @@ export default {
     validateProps: {
       type: String,
       default: ''
-
+    },
+    isNOTFilterField: {
+      type: Boolean,
+      default: false
+    },
+    checkError: {
+      type: Boolean,
+      default: false
     }
-
   },
   data() {
     return {
       localValue: this.value,
+      showCustomError: true,
     };
   },
 
   watch: {
     value(value) {
+
+      if (value != "") {
+        this.showCustomError = false;
+      }
+
       this.localValue = value;
     },
   },
 
   methods: {
     onChange($evt) {
+
+
+
       this.$emit('input', $evt.target.value);
+
     }
   },
 }
@@ -84,6 +101,14 @@ export default {
 @import "~/assets/scss/config";
 @import "~/assets/scss/variables";
 
+.custom-error {
+  margin-top: 5px;
+  font-family: $font-default;
+  font-weight: $fw-light;
+  /* color: $secondary-grey-800; */
+  color: $red-600;
+  font-size: 12px;
+}
 
 
 .form-input-select {
@@ -96,10 +121,14 @@ export default {
   border: 1px solid $grey-100;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
   padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+
+
 
   @media screen and (max-width: $sm) {
     margin-top: 5px;
-    width:100%;
+    width: 100%;
   }
 
   &:focus {

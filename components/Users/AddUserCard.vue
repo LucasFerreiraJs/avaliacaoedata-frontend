@@ -35,21 +35,25 @@
 
           <div class="form-field-password">
             <FormLabel>Senha</FormLabel>
-            <FormInput  vidProp="password" type="password" v-model="form.password" placeholder="Senha" rules="required|minChar:8|maxChar:30|passwordConfirmation:@confirm">
+            <FormInput vidProp="password" type="password" v-model="form.password" placeholder="Senha"
+              rules="required|minChar:8|maxChar:30|passwordConfirmation:@confirm">
             </FormInput>
           </div>
 
 
           <div class="form-field-confirmPassword">
             <FormLabel>Confirmar senha</FormLabel>
-            <FormInput vidProp="confirm" type="password" name="confirm" v-model="confirmPassword" rules="required" placeholder="Confirmar senha"></FormInput>
+            <FormInput vidProp="confirm" type="password" name="confirm" v-model="confirmPassword" rules="required"
+              placeholder="Confirmar senha"></FormInput>
           </div>
 
           <div class="form-field-selectrole">
             <FormLabel>Grupo de acesso</FormLabel>
-            <FormInputSelect vidProp="roleOptions" :options="roleOptions" modeProp="passive"
-              placeholderSelect="Selecione um grupo" rules="required" v-model="form.role">
+            <FormInputSelect vidProp="roleOptions" :options="roleOptions" :isNOTFilterField="showError"
+              :checkError="showCustomRoleError" modeProp="passive" placeholderSelect="Selecione um grupo" rules="required"
+              v-model="form.role">
             </FormInputSelect>
+            <!-- <span>Campo obrigatório</span> -->
           </div>
 
           <div class="form-field-rhcode">
@@ -60,15 +64,19 @@
 
           <div class="form-field-selectRegion">
             <FormLabel>Região</FormLabel>
-            <FormInputSelect :options="regionOptions" placeholderSelect="Selecione uma região" v-model="form.region">
+            <FormInputSelect :options="regionOptions" placeholderSelect="Selecione uma região" v-model="form.region"
+              :isNOTFilterField="showError" :checkError="showCustomRegionError">
             </FormInputSelect>
+            <!-- <span>Campo obrigatório</span> -->
           </div>
 
           <div class="form-field-selectStatus">
             <FormLabel>Status</FormLabel>
             <FormInputSelect :options="options" placeholderSelect="Selecione um status" alt="status"
-              v-model="form.status">
+              :isNOTFilterField="showError" :checkError="showCustomStatusError" v-model="form.status">
             </FormInputSelect>
+            <!-- <span>Campo obrigatório</span> -->
+
           </div>
 
           <div class="form-actions-container">
@@ -122,7 +130,10 @@ export default {
   data() {
     return {
       options: [{ name: "Inativo", id: "0" }, { name: "Ativo", id: "1" }, { name: "Excluído", id: "9" }],
-
+      showCustomRoleError: false,
+      showCustomRegionError: false,
+      showCustomStatusError: false,
+      showError: true,
       form: {
         name: "",
         email: "",
@@ -148,9 +159,16 @@ export default {
   methods: {
     onSubmit() {
       this.$refs.form.validate().then(success => {
-        if (success) {
-          this.sendNewUserFn()
+        if (this.form.region != "" && this.form.role != "" && this.form.status != "") {
+          if (success) {
+
+            this.sendNewUserFn()
+            return;
+          }
         }
+        this.showCustomRoleError = this.form.role == "" ? true : false
+        this.showCustomRegionError = this.form.region == "" ? true : false
+        this.showCustomStatusError = this.form.status == "" ? true : false
 
       }).catch(err => {
         console.log("err", err);
@@ -199,8 +217,7 @@ export default {
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
   gap: 20px 0;
 
-  @media screen and (min-width: $sm) {
-
+  @media screen and (min-width: 690px) {
     .form-field-name {
       width: 40%;
       padding-right: 10px;
@@ -246,12 +263,15 @@ export default {
     width: 100%;
 
     form {
+
       width: 100%;
       display: flex;
       flex-wrap: wrap;
       flex-direction: column;
+      gap: 30px;
 
-      @media screen and (min-width: $sm) {
+      @media screen and (min-width: 690px) {
+
         flex-direction: row;
         justify-content: space-between;
         gap: 20px 0;
@@ -271,6 +291,9 @@ export default {
         align-self: flex-end;
       }
 
+      select {
+        width: 100%;
+      }
     }
   }
 
